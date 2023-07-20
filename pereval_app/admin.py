@@ -11,7 +11,7 @@ class CoordsAdmin(admin.ModelAdmin):
 
 
 class ImagesAdmin(admin.ModelAdmin):
-    list_display = ('id', 'data', 'pereval', 'title', 'date_added')
+    list_display = ('title_1', 'image_1', 'title_2', 'image_2', 'title_3', 'image_3')
 
 
 class LevelAdmin(admin.ModelAdmin):
