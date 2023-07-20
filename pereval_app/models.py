@@ -32,7 +32,7 @@ class PerevalAdded(models.Model):
 
     class Meta:
         verbose_name = "Перевал"
-        verbose_name_plural = "Перевал"
+        verbose_name_plural = "Перевалы"
 
 
 class Coords(models.Model):
@@ -55,7 +55,7 @@ class Level(models.Model):
 
     class Meta:
         verbose_name = "Уровень сложности"
-        verbose_name_plural = "Уровень сложности"
+        verbose_name_plural = "Уровни сложности"
 
 class Images(models.Model):
     pereval = models.ForeignKey('PerevalAdded', on_delete=models.CASCADE, related_name='images')
@@ -67,7 +67,7 @@ class Images(models.Model):
         return f"id: {self.pk}, title:{self.title}"
 
     class Meta:
-        verbose_name = "Изображения"
+        verbose_name = "Изображение"
         verbose_name_plural = "Изображения"
 
 
@@ -85,3 +85,7 @@ class Users(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+    class Meta:
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
