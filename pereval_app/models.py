@@ -8,7 +8,7 @@ phone_regex = RegexValidator(
                                          "'+999999999'. Up to 12 digits allowed.")
 
 class Users(models.Model):
-    email = models.EmailField(max_length=30, verbose_name='Электронная почта')
+    email = models.EmailField(max_length=30, unique=True, verbose_name='Электронная почта')
     fam = models.CharField(max_length=150, verbose_name='Фамилия')
     name = models.CharField(max_length=150, verbose_name='Имя')
     otc = models.CharField(max_length=150, verbose_name='Отчество')
