@@ -18,3 +18,9 @@ class SubmitData(generics.GenericAPIView):
             return Response({'status': status.HTTP_400_BAD_REQUEST, 'message': serializer.errors})
         if status.HTTP_500_INTERNAL_SERVER_ERROR:
             return Response({'status': status.HTTP_500_INTERNAL_SERVER_ERROR, 'message': serializer.errors})
+
+
+class PerevalDetailView(generics.RetrieveAPIView):
+    queryset = PerevalAdded.objects.all()
+    serializer_class = PerevalSerializer
+    lookup_field = 'id'
