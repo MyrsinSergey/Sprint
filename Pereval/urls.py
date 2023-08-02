@@ -5,7 +5,7 @@ from pereval_app.views import SubmitData, EmailAPIView
 from .yasg import urlpatterns as doc_urls
 
 router = routers.DefaultRouter()
-router.register('', SubmitData)
+router.register(r'', SubmitData)
 
 
 urlpatterns = [
