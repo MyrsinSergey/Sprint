@@ -31,10 +31,10 @@ class Coords(models.Model):
         verbose_name_plural = "Координаты"
 
 class Level(models.Model):
-    winter = models.CharField(max_length=10, verbose_name='Зима', null=True)
-    summer = models.CharField(max_length=10, verbose_name='Лето', null=True)
-    autumn = models.CharField(max_length=10, verbose_name='Осень', null=True)
-    spring = models.CharField(max_length=10, verbose_name='Весна', null=True)
+    winter = models.CharField(max_length=10, verbose_name='Зима', blank=True)
+    summer = models.CharField(max_length=10, verbose_name='Лето', blank=True)
+    autumn = models.CharField(max_length=10, verbose_name='Осень', blank=True)
+    spring = models.CharField(max_length=10, verbose_name='Весна', blank=True)
 
     def __str__(self):
         return f'{self.winter} {self.summer} {self.autumn} {self.spring}'
@@ -45,11 +45,11 @@ class Level(models.Model):
 
 class Images(models.Model):
     title_1 = models.CharField(max_length=255, blank=True, verbose_name='Название фото 1')
-    image_1 = models.ImageField(max_length=255, upload_to=get_image_path, blank=True, verbose_name='Фотография 1')
+    image_1 = models.CharField(blank=True, verbose_name='Фотография 1', default=None)
     title_2 = models.CharField(max_length=255, blank=True, verbose_name='Название фото 2')
-    image_2 = models.ImageField(max_length=255, upload_to=get_image_path, blank=True, verbose_name='Фотография 2')
+    image_2 = models.CharField(blank=True, verbose_name='Фотография 2', default=None)
     title_3 = models.CharField(max_length=255, blank=True, verbose_name='Название фото 3')
-    image_3 = models.ImageField(max_length=255, upload_to=get_image_path, blank=True, verbose_name='Фотография 3')
+    image_3 = models.CharField(blank=True, verbose_name='Фотография 3', default=None)
 
     def __str__(self):
         return f'{self.title_1} {self.title_2} {self.title_3}'
@@ -80,7 +80,7 @@ class PerevalAdded(models.Model):
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
     images = models.ForeignKey(Images, on_delete=models.CASCADE)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=NEW, verbose_name='Статус')
-    connect = models.TextField(null=True, verbose_name='Соединяет')
+    connect = models.TextField(verbose_name='Соединяет', blank=True)
 
     def __str__(self):
         return f'{self.beauty_title} {self.title} {self.other_titles} id: {self.pk}, title:{self.title}'

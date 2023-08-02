@@ -1,7 +1,14 @@
-from django.urls import path
-from .views import SubmitData, PerevalDetailView
+from django.urls import path, include
+from rest_framework import routers
+from .views import SubmitData, EmailAPIView
+from .yasg import urlpatterns as doc_urls
+
+router = routers.DefaultRouter()
+router.register('', SubmitData)
 
 urlpatterns = [
-    path('api/v1/submitData/', SubmitData.as_view(), name='submitData'),
-    path('api/v1/submitData/<int:id>/', PerevalDetailView.as_view(), name='pereval-detail'),
+    path('submitData/', include(router.urls)),
+    path('submitData/user__email=<str:email>', EmailAPIView.as_view()),
 ]
+
+urlpatterns += doc_urls
