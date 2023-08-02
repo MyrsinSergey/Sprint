@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import *
 from drf_writable_nested import WritableNestedModelSerializer
 
-
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
@@ -66,13 +65,19 @@ class PerevalSerializer(WritableNestedModelSerializer):
 
         return pereval
 
-    """Сохранение данных о перевале, измененных пользователем"""
-    def update(self, instance, validated_data):
-        # Исключаем поля с ФИО, адресом почты и номером телефона из обновления
-        exclude_fields = ['fam', 'name', 'otc', 'email', 'phone']
-
-        for field in exclude_fields:
-            validated_data.pop(field, None)
-
-        # Выполняем обновление объекта с оставшимися данными
-        return super().update(instance, validated_data)
+    def validate(self, data):
+        if self.instance is not None:
+            instance_user = self.instance.user
+            data_user = data.get('user')
+            if data_user is not None:
+                validating_user_fields = [
+                    instance_user.fam != data_user.get('fam'),
+                    instance_user.name != data_user.get('name'),
+                    instance_user.otc != data_user.get('otc'),
+                    instance_user.phone != data_user.get('phone'),
+                    instance_user.email != data_user.get('email'),
+                ]
+                if any(validating_user_fields):
+                    raise serializers.ValidationError(
+                        {'Не удалось обновить запись': 'Нельзя изменять данные пользователя'})
+        return data

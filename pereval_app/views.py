@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from rest_framework import  status, mixins, generics
+from rest_framework import status, mixins, generics
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
@@ -39,7 +39,7 @@ class SubmitData(mixins.CreateModelMixin,
                 'id': None,
             })
 
-    """Изменение объекта перевала id (кроме полей с данными пользователя)"""
+    """Изменение объекта перевала по id (кроме полей с данными пользователя)"""
 
     def partial_update(self, request, *args, **kwargs):
         pereval = self.get_object()
@@ -59,9 +59,8 @@ class SubmitData(mixins.CreateModelMixin,
         else:
             return Response({
                 'state': '0',
-                'message': f"Не удалось обновить запись: {pereval.get_status_display()}"
+                'message': f"Не удалось обновить запись: статус записи - {pereval.get_status_display()}"
             })
-
 
 """GET запрос для вывода всех записей по email пользователя"""
 class EmailAPIView(generics.ListAPIView):
