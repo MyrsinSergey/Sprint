@@ -44,7 +44,7 @@ class PerevalSerializer(WritableNestedModelSerializer):
 
     class Meta:
         model = PerevalAdded
-        fields = ['id', 'status', 'beauty_title', 'title', 'other_titles', 'connect', 'add_time', 'user', 'coords', 'level', 'images']
+        fields = ['id', 'beauty_title', 'title', 'other_titles', 'connect', 'add_time', 'user', 'coords', 'level', 'images']
 
 
     """Сохранение данных о перевале, полученных от пользователя"""
@@ -61,7 +61,8 @@ class PerevalSerializer(WritableNestedModelSerializer):
         coords = Coords.objects.create(**coords_data)
         level = Level.objects.create(**level_data)
 
-        pereval = PerevalAdded.objects.create(**validated_data, user=user, coords=coords, level=level, images=images)
+        pereval = PerevalAdded.objects.create(**validated_data, user=user, coords=coords, level=level, images=images,
+                                              status='new')
 
         return pereval
 
@@ -81,3 +82,14 @@ class PerevalSerializer(WritableNestedModelSerializer):
                     raise serializers.ValidationError(
                         {'Не удалось обновить запись': 'Нельзя изменять данные пользователя'})
         return data
+
+class PerevalDetailSerializer(serializers.ModelSerializer):
+    user = UsersSerializer()
+    coords = CoordsSerializer()
+    level = LevelSerializer()
+    images = ImagesSerializer()
+
+    class Meta:
+        model = PerevalAdded
+        fields = ['id', 'status', 'beauty_title', 'title', 'other_titles', 'connect', 'add_time', 'user', 'coords', 'level', 'images']
+

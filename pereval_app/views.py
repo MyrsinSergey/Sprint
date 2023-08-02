@@ -2,9 +2,9 @@ from django.http import JsonResponse
 from rest_framework import status, mixins, generics
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
-
+from rest_framework.generics import ListAPIView
 from .models import PerevalAdded
-from .serializers import PerevalSerializer
+from .serializers import PerevalSerializer, PerevalDetailSerializer
 
 
 class SubmitData(mixins.CreateModelMixin,
@@ -62,16 +62,17 @@ class SubmitData(mixins.CreateModelMixin,
                 'message': f"Не удалось обновить запись: статус записи - {pereval.get_status_display()}"
             })
 
+
 """GET запрос для вывода всех записей по email пользователя"""
-class EmailAPIView(generics.ListAPIView):
-    serializer_class = PerevalSerializer
+class EmailAPIView(ListAPIView):
+    serializer_class = PerevalDetailSerializer
 
     def get(self, request, *args, **kwargs):
         email = kwargs.get('email', None)
         if PerevalAdded.objects.filter(user__email=email):
-            data = PerevalSerializer(PerevalAdded.objects.filter(user__email=email), many=True).data
+            data = PerevalDetailSerializer(PerevalAdded.objects.filter(user__email=email), many=True).data
         else:
             data = {
-                'message': f'Not exist email = {email}'
+                'message': f'Записи с электронной почтой {email} не найдены!'
             }
         return JsonResponse(data, safe=False)
