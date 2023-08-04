@@ -35,7 +35,6 @@ class ImagesSerializer(serializers.ModelSerializer):
         fields = ['image_1', 'title_1', 'image_2', 'title_2', 'image_3', 'title_3']
 
 
-"""Общий сериалайзер для вывода пользователю"""
 class PerevalSerializer(WritableNestedModelSerializer):
     user = UsersSerializer()
     coords = CoordsSerializer()
@@ -44,11 +43,10 @@ class PerevalSerializer(WritableNestedModelSerializer):
 
     class Meta:
         model = PerevalAdded
-        fields = ['id', 'status', 'beauty_title', 'title', 'other_titles', 'connect', 'add_time', 'user', 'coords',
+        fields = ['id', 'beauty_title', 'title', 'other_titles', 'connect', 'add_time', 'user', 'coords',
                   'level', 'images']
 
 
-    """Сохранение данных о перевале, полученных от пользователя"""
     def create(self, validated_data, **kwargs):
         user_data = validated_data.pop('user')
         email = user_data.get('email')
@@ -67,19 +65,23 @@ class PerevalSerializer(WritableNestedModelSerializer):
 
         return pereval
 
-    def validate(self, data):
-        if self.instance is not None:
-            instance_user = self.instance.user
-            data_user = data.get('user')
-            if data_user is not None:
-                validating_user_fields = [
-                    instance_user.fam != data_user.get('fam'),
-                    instance_user.name != data_user.get('name'),
-                    instance_user.otc != data_user.get('otc'),
-                    instance_user.phone != data_user.get('phone'),
-                    instance_user.email != data_user.get('email'),
-                ]
-                if any(validating_user_fields):
-                    raise serializers.ValidationError(
-                        {'Не удалось обновить запись': 'Нельзя изменять данные пользователя'})
-        return data
+
+class DetailedPerevalSerializer(WritableNestedModelSerializer):
+    user = UsersSerializer()
+    coords = CoordsSerializer()
+    level = LevelSerializer()
+    images = ImagesSerializer()
+
+    class Meta:
+        model = PerevalAdded
+        fields = ['id', 'beauty_title', 'title', 'other_titles', 'connect', 'add_time', 'user', 'coords',
+                  'level', 'images', 'status']
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user', None)
+        if user_data:
+            user = instance.user
+            for key, value in user_data.items():
+                setattr(user, key, value)
+            user.save()
+        return super().update(instance, validated_data)

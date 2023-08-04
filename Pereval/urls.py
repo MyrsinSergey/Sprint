@@ -1,18 +1,14 @@
 from django.contrib import admin
-from django.urls import path, include
-from rest_framework import routers
-from pereval_app.views import SubmitData, EmailAPIView
+from django.urls import path
+from pereval_app.views import SubmitData, SubmitDataDetailView
 from .yasg import urlpatterns as doc_urls
 
-router = routers.DefaultRouter()
-router.register(r'', SubmitData)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('submitData/', include(router.urls)),
-    path('submitData/user__email=<email>', EmailAPIView.as_view()),
+    path('submitData/', SubmitData.as_view()),
+    path('submitData/<int:pk>/', SubmitDataDetailView.as_view()),
 ]
 
 urlpatterns += doc_urls
