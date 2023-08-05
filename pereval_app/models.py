@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import RegexValidator
 
-get_image_path = 'media/'
+
 phone_regex = RegexValidator(
         regex=r'^\+?1?\d{9,12}$',
         message="Phone number must be entered in the format: "

@@ -1,0 +1,417 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "REST API pereval",
+    "description": "REST API для сайта ФСТР pereval-online.ru",
+    "license": {
+      "name": "BSD License"
+    },
+    "version": "v1"
+  },
+  "host": "127.0.0.1:8000",
+  "schemes": [
+    "http"
+  ],
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "Basic": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "Basic": []
+    }
+  ],
+  "paths": {
+    "/submitData/": {
+      "get": {
+        "operationId": "submitData_list",
+        "description": "",
+        "parameters": [
+          {
+            "name": "ordering",
+            "in": "query",
+            "description": "Which field to use when ordering the results.",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Pereval"
+              }
+            }
+          }
+        },
+        "tags": [
+          "submitData"
+        ]
+      },
+      "post": {
+        "operationId": "submitData_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Pereval"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Pereval"
+            }
+          }
+        },
+        "tags": [
+          "submitData"
+        ]
+      },
+      "parameters": []
+    },
+    "/submitData/{id}/": {
+      "get": {
+        "operationId": "submitData_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DetailedPereval"
+            }
+          }
+        },
+        "tags": [
+          "submitData"
+        ]
+      },
+      "put": {
+        "operationId": "submitData_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DetailedPereval"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DetailedPereval"
+            }
+          }
+        },
+        "tags": [
+          "submitData"
+        ]
+      },
+      "patch": {
+        "operationId": "submitData_partial_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DetailedPereval"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/DetailedPereval"
+            }
+          }
+        },
+        "tags": [
+          "submitData"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A unique integer value identifying this Перевал.",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "Users": {
+      "required": [
+        "email",
+        "fam",
+        "name",
+        "otc"
+      ],
+      "type": "object",
+      "properties": {
+        "email": {
+          "title": "Электронная почта",
+          "type": "string",
+          "format": "email",
+          "maxLength": 30,
+          "minLength": 1
+        },
+        "fam": {
+          "title": "Фамилия",
+          "type": "string",
+          "maxLength": 150,
+          "minLength": 1
+        },
+        "name": {
+          "title": "Имя",
+          "type": "string",
+          "maxLength": 150,
+          "minLength": 1
+        },
+        "otc": {
+          "title": "Отчество",
+          "type": "string",
+          "maxLength": 150,
+          "minLength": 1
+        },
+        "phone": {
+          "title": "Телефон",
+          "type": "string",
+          "pattern": "^\\+?1?\\d{9,12}$",
+          "maxLength": 14
+        }
+      }
+    },
+    "Coords": {
+      "required": [
+        "latitude",
+        "longitude",
+        "height"
+      ],
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "title": "Широта",
+          "type": "number"
+        },
+        "longitude": {
+          "title": "Долгота",
+          "type": "number"
+        },
+        "height": {
+          "title": "Высота",
+          "type": "number"
+        }
+      }
+    },
+    "Level": {
+      "type": "object",
+      "properties": {
+        "winter": {
+          "title": "Зима",
+          "type": "string",
+          "maxLength": 10
+        },
+        "summer": {
+          "title": "Лето",
+          "type": "string",
+          "maxLength": 10
+        },
+        "autumn": {
+          "title": "Осень",
+          "type": "string",
+          "maxLength": 10
+        },
+        "spring": {
+          "title": "Весна",
+          "type": "string",
+          "maxLength": 10
+        }
+      }
+    },
+    "Images": {
+      "type": "object",
+      "properties": {
+        "image_1": {
+          "title": "Фотография 1",
+          "type": "string"
+        },
+        "title_1": {
+          "title": "Название фото 1",
+          "type": "string",
+          "maxLength": 255
+        },
+        "image_2": {
+          "title": "Фотография 2",
+          "type": "string"
+        },
+        "title_2": {
+          "title": "Название фото 2",
+          "type": "string",
+          "maxLength": 255
+        },
+        "image_3": {
+          "title": "Фотография 3",
+          "type": "string"
+        },
+        "title_3": {
+          "title": "Название фото 3",
+          "type": "string",
+          "maxLength": 255
+        }
+      }
+    },
+    "Pereval": {
+      "required": [
+        "beauty_title",
+        "title",
+        "other_titles",
+        "user",
+        "coords",
+        "level",
+        "images"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "beauty_title": {
+          "title": "Название препятствия",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "title": {
+          "title": "Название вершины",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "other_titles": {
+          "title": "Другое название",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "connect": {
+          "title": "Соединяет",
+          "type": "string"
+        },
+        "add_time": {
+          "title": "Add time",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "user": {
+          "$ref": "#/definitions/Users"
+        },
+        "coords": {
+          "$ref": "#/definitions/Coords"
+        },
+        "level": {
+          "$ref": "#/definitions/Level"
+        },
+        "images": {
+          "$ref": "#/definitions/Images"
+        }
+      }
+    },
+    "DetailedPereval": {
+      "required": [
+        "beauty_title",
+        "title",
+        "other_titles",
+        "user",
+        "coords",
+        "level",
+        "images"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "beauty_title": {
+          "title": "Название препятствия",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "title": {
+          "title": "Название вершины",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "other_titles": {
+          "title": "Другое название",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "connect": {
+          "title": "Соединяет",
+          "type": "string"
+        },
+        "add_time": {
+          "title": "Add time",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "user": {
+          "$ref": "#/definitions/Users"
+        },
+        "coords": {
+          "$ref": "#/definitions/Coords"
+        },
+        "level": {
+          "$ref": "#/definitions/Level"
+        },
+        "images": {
+          "$ref": "#/definitions/Images"
+        },
+        "status": {
+          "title": "Статус",
+          "type": "string",
+          "enum": [
+            "new",
+            "pending",
+            "accepted",
+            "rejected"
+          ]
+        }
+      }
+    }
+  }
+}

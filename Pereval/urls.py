@@ -10,7 +10,6 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('submitData/', SubmitData.as_view()),
     path('submitData/<int:pk>/', SubmitDataDetailView.as_view()),
-
 ]
 
 urlpatterns += doc_urls
