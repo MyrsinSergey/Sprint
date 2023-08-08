@@ -46,9 +46,9 @@ FSTR_DB_NAME, FSTR_DB_LOGIN, FSTR_DB_PASS, FSTR_DB_HOST, FSTR_DB_PORT
   
         "fam": "Пупкин",
 	
-		 "name": "Василий",
+        "name": "Василий",
    
-		 "otc": "Иванович",
+        "otc": "Иванович",
    
         "phone": "+71112223344"}, 
  

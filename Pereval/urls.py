@@ -8,8 +8,8 @@ from .yasg import urlpatterns as doc_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('submitData/', SubmitData.as_view()),
-    path('submitData/<int:pk>/', SubmitDataDetailView.as_view()),
+    path('submitData/', SubmitData.as_view(), name='submitData'),
+    path('submitData/<int:pk>/', SubmitDataDetailView.as_view(), name='submitData_detail'),
 ]
 
 urlpatterns += doc_urls
