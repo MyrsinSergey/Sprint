@@ -74,6 +74,6 @@ FSTR_DB_NAME, FSTR_DB_LOGIN, FSTR_DB_PASS, FSTR_DB_HOST, FSTR_DB_PORT
  
 Приложение для работы с REST API было опубликовано на хостинге pythonanywhere.com
 * вызов метода POST доступен по адресу http://myrsinsergey.pythonanywhere.com/submitData/
-* вызов методов GET и PATCH доступен по адресу http://myrsinsergey.pythonanywhere.com/submitData/<id>
+* вызов методов GET и PATCH доступен по адресу http://myrsinsergey.pythonanywhere.com/submitData/id_записи
 * вызов метода GET для получения всех записей по определенному email доступен по адресу 
-http://myrsinsergey.pythonanywhere.com//submitData/?user__email=<email>
+http://myrsinsergey.pythonanywhere.com//submitData/?user__email=email_пользователя
